@@ -1,0 +1,39 @@
+[project]
+name = "flowforge"
+version = "0.1.0"
+description = "Event-driven DAG workflow execution platform"
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+  # API
+  "fastapi",
+  "uvicorn[standard]",
+
+  # Database
+  "sqlalchemy[asyncio]",
+  "asyncpg",
+  "alembic",
+
+  # Queue
+  "redis",
+
+  # Core
+  "pydantic",
+  "pydantic-settings",
+  "python-dotenv",
+
+  # Networking / execution
+  "httpx",
+
+  # Performance
+  "orjson",
+
+  # Logging
+  "structlog",
+]
+
+[project.scripts]
+flowforge-api = "scripts.run_api:main"
+flowforge-scheduler = "scripts.run_scheduler:main"
+flowforge-worker = "scripts.run_worker:main"
