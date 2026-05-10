@@ -9,28 +9,23 @@ dependencies = [
   # API
   "fastapi",
   "uvicorn[standard]",
-
   # Database
   "sqlalchemy[asyncio]",
   "asyncpg",
   "alembic",
-
   # Queue
   "redis",
-
   # Core
   "pydantic",
   "pydantic-settings",
   "python-dotenv",
-
   # Networking / execution
   "httpx",
-
   # Performance
   "orjson",
-
   # Logging
   "structlog",
+  "psycopg[binary]>=3.3.4",
 ]
 
 [project.scripts]

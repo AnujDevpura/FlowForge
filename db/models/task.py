@@ -1,8 +1,7 @@
+import uuid
 from datetime import datetime
-from uuid import UUID as PyUUID
-from uuid import uuid4
 
-from sqlalchemy import DateTime, Enum as SAEnum, ForeignKey, Integer, String, func
+from sqlalchemy import DateTime, Enum, ForeignKey, Integer, String, Text
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -13,45 +12,77 @@ from db.enums import TaskStatus
 class Task(Base):
     __tablename__ = "tasks"
 
-    id: Mapped[PyUUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid4)
-    job_id: Mapped[PyUUID] = mapped_column(
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+
+    job_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("jobs.id", ondelete="CASCADE"),
         nullable=False,
-        index=True,
     )
-    name: Mapped[str] = mapped_column(String(255), nullable=False)
-    status: Mapped[TaskStatus] = mapped_column(
-        SAEnum(TaskStatus, name="task_status"),
-        default=TaskStatus.QUEUED,
-        nullable=False,
-        index=True,
-    )
-    payload: Mapped[dict] = mapped_column(JSONB, default=dict, nullable=False)
-    retry_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    max_retries: Mapped[int] = mapped_column(Integer, default=3, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        server_default=func.now(),
-        nullable=False,
-    )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        server_default=func.now(),
-        onupdate=func.now(),
+
+    name: Mapped[str] = mapped_column(
+        String,
         nullable=False,
     )
 
-    job = relationship("Job", back_populates="tasks")
-    upstream_dependencies = relationship(
-        "Dependency",
-        foreign_keys="Dependency.task_id",
-        back_populates="task",
-        cascade="all, delete-orphan",
+    status: Mapped[TaskStatus] = mapped_column(
+        Enum(TaskStatus),
+        default=TaskStatus.PENDING,
+        nullable=False,
     )
-    downstream_dependents = relationship(
-        "Dependency",
-        foreign_keys="Dependency.depends_on_task_id",
-        back_populates="depends_on_task",
-        cascade="all, delete-orphan",
+
+    payload: Mapped[dict] = mapped_column(
+        JSONB,
+        nullable=False,
+    )
+
+    retry_count: Mapped[int] = mapped_column(
+        Integer,
+        default=0,
+        nullable=False,
+    )
+
+    max_retries: Mapped[int] = mapped_column(
+        Integer,
+        default=3,
+        nullable=False,
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False,
+    )
+
+    queued_at: Mapped[datetime | None] = mapped_column(
+        DateTime,
+        nullable=True,
+    )
+
+    started_at: Mapped[datetime | None] = mapped_column(
+        DateTime,
+        nullable=True,
+    )
+
+    completed_at: Mapped[datetime | None] = mapped_column(
+        DateTime,
+        nullable=True,
+    )
+
+    last_error: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
+
+    worker_id: Mapped[str | None] = mapped_column(
+        String,
+        nullable=True,
+    )
+    
+    job: Mapped["Job"] = relationship(
+        back_populates="tasks",
     )
