@@ -1,5 +1,6 @@
-from sqlalchemy import Select, func, select
+from sqlalchemy import Select, func, select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
+from datetime import datetime
 
 from db.enums import TaskStatus
 from db.models.dependency import TaskDependency
@@ -55,6 +56,13 @@ async def get_runnable_tasks(
             func.coalesce(
                 successful_dependency_subquery.c.successful_dependencies,
                 0,
+            )
+        )
+        
+        .where(
+            or_(
+                Task.next_retry_at.is_(None),
+                Task.next_retry_at <= datetime.utcnow(),
             )
         )
     )

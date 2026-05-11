@@ -10,6 +10,8 @@ EXECUTOR_MAP = {
 
 async def execute_task(
     payload: dict,
+    context,
+    execution=None,
 ):
 
     task_type = payload.get("type")
@@ -19,8 +21,15 @@ async def execute_task(
     )
 
     if not executor:
+
         raise ValueError(
             f"Unknown task type: {task_type}"
         )
 
-    await executor.execute(payload)
+    result = await executor.execute(
+        payload,
+        context,
+        execution,
+    )
+
+    return result

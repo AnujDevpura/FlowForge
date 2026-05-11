@@ -1,11 +1,17 @@
 from executors.base import BaseExecutor
 
+from utils.execution_logs import (
+    append_log,
+)
+
 
 class PrintExecutor(BaseExecutor):
 
     async def execute(
         self,
         payload: dict,
+        context,
+        execution=None,
     ):
 
         message = payload.get(
@@ -13,6 +19,32 @@ class PrintExecutor(BaseExecutor):
             ""
         )
 
+        if execution:
+
+            append_log(
+                execution,
+                f"Printing message: {message}",
+            )
+
         print(
-            f"[PRINT EXECUTOR]: {message}"
+            f"PRINT TASK: {message}"
         )
+
+        print(
+            f"CONTEXT: {context}"
+        )
+
+        if execution:
+
+            append_log(
+                execution,
+                "Print task completed",
+            )
+
+        return {
+            "printed_message":
+                message,
+
+            "context_received":
+                True,
+        }

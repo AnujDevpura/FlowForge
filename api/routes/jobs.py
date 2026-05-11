@@ -5,6 +5,9 @@ from sqlalchemy import select
 
 from db.deps import get_db
 from db.models.dependency import TaskDependency
+from db.models.task_execution import (
+    TaskExecution,
+)
 from db.models.job import Job
 from db.models.task import Task
 from schemas.job import JobCreate
@@ -81,7 +84,6 @@ async def create_job(
 
 @router.get(
     "/{job_id}",
-    response_model=JobResponse,
 )
 async def get_job(
     job_id: str,
@@ -104,4 +106,149 @@ async def get_job(
             detail="Job not found",
         )
 
-    return job
+    dependency_result = await db.execute(
+        select(TaskDependency)
+        .join(
+            Task,
+            Task.id
+            ==
+            TaskDependency.task_id,
+        )
+        .where(
+            Task.job_id == job.id
+        )
+    )
+
+    dependencies = (
+        dependency_result.scalars().all()
+    )
+
+    execution_result = await db.execute(
+        select(TaskExecution)
+        .join(
+            Task,
+            Task.id
+            ==
+            TaskExecution.task_id,
+        )
+        .where(
+            Task.job_id == job.id
+        )
+    )
+
+    executions = (
+        execution_result.scalars().all()
+    )
+
+    return {
+        "id": str(job.id),
+
+        "name": job.name,
+
+        "status": job.status,
+
+        "created_at": job.created_at,
+
+        "updated_at": job.updated_at,
+
+        "tasks": [
+            {
+                "id": str(task.id),
+
+                "name": task.name,
+
+                "status": task.status,
+                
+                "worker_id": (
+                    str(task.worker_id)
+                    if task.worker_id
+                    else None
+                ),
+
+                "lease_expires_at":
+                    task.lease_expires_at,
+
+                "retry_count":
+                    task.retry_count,
+
+                "max_retries":
+                    task.max_retries,
+
+                "created_at":
+                    task.created_at,
+
+                "queued_at":
+                    task.queued_at,
+
+                "started_at":
+                    task.started_at,
+
+                "completed_at":
+                    task.completed_at,
+
+                "last_error":
+                    task.last_error,
+
+                "executions": [
+                    {
+                        "id":
+                            str(execution.id),
+
+                        "attempt_number":
+                            execution.attempt_number,
+
+                        "status":
+                            execution.status,
+                            
+                        "logs":
+                            execution.logs,
+
+                        "worker_id":
+                            str(execution.worker_id)
+                            if execution.worker_id
+                            else None,
+
+                        "started_at":
+                            execution.started_at,
+
+                        "completed_at":
+                            execution.completed_at,
+
+                        "error_message":
+                            execution.error_message,
+                    }
+                    for execution in executions
+                    if execution.task_id
+                    == task.id
+                ],
+            }
+            for task in job.tasks
+        ],
+
+        "dependencies": [
+            {
+                "task_id":
+                    str(dep.task_id),
+
+                "depends_on_task_id":
+                    str(
+                        dep.depends_on_task_id
+                    ),
+            }
+            for dep in dependencies
+        ],
+    }
+
+
+@router.get("/")
+async def list_jobs(
+    db: AsyncSession = Depends(get_db),
+):
+
+    result = await db.execute(
+        select(Job)
+    )
+
+    jobs = result.scalars().all()
+
+    return jobs
