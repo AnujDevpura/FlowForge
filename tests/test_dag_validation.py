@@ -3,6 +3,7 @@ import pytest
 from utils.dag_validation import validate_dag
 from schemas.job import JobCreate
 
+
 def test_valid_dag_passes():
 
     tasks = [
@@ -27,6 +28,33 @@ def test_valid_dag_passes():
             ],
         },
     ]
+
+
+def test_missing_dependency_raises_error():
+
+    tasks = [
+        {
+            "name": "task_a",
+
+            "payload": {
+                "type": "print",
+                "message": "A",
+            },
+
+            "dependencies": [
+                "task_b",
+            ],
+        },
+    ]
+
+    with pytest.raises(ValueError):
+
+        validate_dag(
+            JobCreate(
+                name="missing_dependency_job",
+                tasks=tasks,
+            )
+        )
 
 
 def test_cycle_detection_raises_error():
