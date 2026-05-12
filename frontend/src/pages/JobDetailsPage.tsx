@@ -199,11 +199,11 @@ function JobDetailsPage() {
 
 
     return (
-        <div>
+        <div className="mx-auto max-w-7xl">
 
             <div className="mb-8">
 
-                <h1 className="text-4xl font-bold mb-3">
+                <h1 className="text-4xl font-black tracking-tight mb-3">
                     {job.name}
                 </h1>
 
@@ -227,7 +227,7 @@ function JobDetailsPage() {
 
             <div className="mb-8">
 
-                <h2 className="text-2xl font-semibold mb-4">
+                <h2 className="text-2xl font-bold mb-4">
                     Workflow Graph
                 </h2>
 
@@ -242,7 +242,7 @@ function JobDetailsPage() {
 
             <div>
 
-                <h2 className="text-2xl font-semibold mb-4">
+                <h2 className="text-2xl font-bold mb-4">
                     Tasks
                 </h2>
 
@@ -253,11 +253,8 @@ function JobDetailsPage() {
                         <div
                             key={task.id}
                             className="
-                                border
-                                border-zinc-800
-                                rounded-xl
-                                p-5
-                                bg-zinc-900
+                                border border-zinc-800/90 rounded-2xl p-5
+                                bg-gradient-to-b from-zinc-900/90 to-zinc-950/90
                             "
                         >
 
@@ -357,11 +354,9 @@ function JobDetailsPage() {
                                                         execution.id
                                                     }
                                                     className="
-                                                        border
-                                                        border-zinc-800
-                                                        rounded-lg
-                                                        p-3
-                                                        bg-zinc-950
+                                                        border border-zinc-800
+                                                        rounded-xl p-3
+                                                        bg-zinc-950/80
                                                     "
                                                 >
 
@@ -496,14 +491,9 @@ function JobDetailsPage() {
 
                                                                         <pre
                                                                             className="
-                                                                                bg-black
-                                                                                border
-                                                                                border-zinc-800
-                                                                                rounded-lg
-                                                                                p-3
-                                                                                text-xs
-                                                                                overflow-auto
-                                                                                text-green-400
+                                                                                bg-black/70 border border-zinc-800
+                                                                                rounded-xl p-3 text-xs overflow-auto
+                                                                                text-emerald-300
                                                                             "
                                                                         >
 
@@ -519,15 +509,9 @@ function JobDetailsPage() {
 
                                                                     <div
                                                                         className="
-                                                                            mt-4
-                                                                            p-3
-                                                                            rounded-lg
-                                                                            bg-red-950
-                                                                            border
-                                                                            border-red-800
-                                                                            text-red-300
-                                                                            text-xs
-                                                                            overflow-auto
+                                                                            mt-4 p-3 rounded-xl
+                                                                            bg-rose-500/10 border border-rose-500/30
+                                                                            text-rose-300 text-xs overflow-auto
                                                                         "
                                                                     >
 

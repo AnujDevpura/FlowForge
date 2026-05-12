@@ -12,42 +12,42 @@ function StatusBadge({
 
             case "SUCCESS":
                 return `
-                    bg-green-900
-                    text-green-300
-                    border-green-700
+                    bg-emerald-500/15
+                    text-emerald-300
+                    border-emerald-500/40
                 `
 
             case "FAILED":
                 return `
-                    bg-red-900
-                    text-red-300
-                    border-red-700
+                    bg-rose-500/15
+                    text-rose-300
+                    border-rose-500/40
                 `
 
             case "RUNNING":
                 return `
-                    bg-blue-900
-                    text-blue-300
-                    border-blue-700
+                    bg-cyan-500/15
+                    text-cyan-300
+                    border-cyan-500/40
                 `
 
             case "QUEUED":
                 return `
-                    bg-yellow-900
-                    text-yellow-300
-                    border-yellow-700
+                    bg-amber-500/15
+                    text-amber-300
+                    border-amber-500/40
                 `
             
             case "BLOCKED":
-                return `bg-zinc-800
+                return `bg-zinc-700/40
                     text-zinc-300
-                    border-zinc-700`
+                    border-zinc-600`
 
             default:
                 return `
-                    bg-zinc-800
+                    bg-zinc-700/40
                     text-zinc-300
-                    border-zinc-700
+                    border-zinc-600
                 `
         }
     }
@@ -60,7 +60,8 @@ function StatusBadge({
                 rounded-full
                 text-sm
                 border
-                font-medium
+                font-semibold
+                tracking-wide
                 ${getClasses()}
             `}
         >

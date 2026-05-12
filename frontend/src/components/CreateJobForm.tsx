@@ -59,16 +59,13 @@ function CreateJobForm() {
         <form
             onSubmit={handleSubmit}
             className="
-                border
-                border-zinc-800
-                rounded-xl
-                p-6
-                bg-zinc-900
-                mb-8
+                border border-zinc-800/80 rounded-2xl p-6 md:p-7
+                bg-zinc-900/70 backdrop-blur
+                mb-8 shadow-[0_16px_44px_-30px_rgba(6,182,212,0.45)]
             "
         >
 
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-2xl font-black tracking-tight mb-5">
                 Create Job
             </h2>
 
@@ -82,13 +79,10 @@ function CreateJobForm() {
                     )
                 }
                 className="
-                    w-full
-                    mb-4
-                    p-3
-                    rounded-lg
-                    bg-zinc-950
-                    border
-                    border-zinc-700
+                    w-full mb-4 p-3 rounded-xl
+                    bg-zinc-950/80 border border-zinc-700
+                    text-zinc-100 placeholder:text-zinc-500
+                    focus:outline-none focus:ring-2 focus:ring-cyan-500/40
                 "
             />
 
@@ -101,27 +95,18 @@ function CreateJobForm() {
                 }
                 rows={14}
                 className="
-                    w-full
-                    p-3
-                    rounded-lg
-                    bg-zinc-950
-                    border
-                    border-zinc-700
-                    font-mono
-                    text-sm
+                    w-full p-3 rounded-xl bg-zinc-950/80 border border-zinc-700
+                    font-mono text-sm text-zinc-200
+                    focus:outline-none focus:ring-2 focus:ring-cyan-500/40
                 "
             />
 
             <button
                 type="submit"
                 className="
-                    mt-4
-                    px-5
-                    py-3
-                    rounded-lg
-                    bg-blue-700
-                    hover:bg-blue-600
-                    transition
+                    mt-4 px-5 py-3 rounded-xl
+                    bg-cyan-600 text-cyan-950 font-bold
+                    hover:bg-cyan-500 transition
                 "
             >
                 Submit Workflow

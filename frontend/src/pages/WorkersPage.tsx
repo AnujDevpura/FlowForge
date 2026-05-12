@@ -52,9 +52,9 @@ function WorkersPage() {
     }, [])
 
     return (
-        <div>
+        <div className="mx-auto max-w-7xl">
 
-            <h1 className="text-3xl font-bold mb-6">
+            <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-6">
                 Workers
             </h1>
 
@@ -65,11 +65,8 @@ function WorkersPage() {
                     <div
                         key={worker.id}
                         className="
-                            border
-                            border-zinc-800
-                            rounded-xl
-                            p-4
-                            bg-zinc-900
+                            border border-zinc-800/90 rounded-2xl p-5
+                            bg-gradient-to-b from-zinc-900/90 to-zinc-950/90
                         "
                     >
 
@@ -93,6 +90,11 @@ function WorkersPage() {
 
                     </div>
                 ))}
+                {workers.length === 0 && (
+                    <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 text-zinc-400">
+                        No workers registered yet.
+                    </div>
+                )}
 
             </div>
 

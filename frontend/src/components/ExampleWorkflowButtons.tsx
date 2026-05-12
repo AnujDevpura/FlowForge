@@ -260,16 +260,15 @@ function ExampleWorkflowButtons() {
     }
 
     return (
-        <div className="mb-8 flex gap-4 flex-wrap">
+        <div className="mb-8 flex gap-3 flex-wrap">
 
             <button
                 onClick={runContextWorkflow}
                 className="
-                    px-4
-                    py-3
-                    rounded-lg
-                    bg-green-700
-                    hover:bg-green-600
+                    px-4 py-3 rounded-xl font-semibold
+                    border border-emerald-500/40
+                    bg-emerald-600/15 text-emerald-200
+                    hover:bg-emerald-600/25 transition
                 "
             >
                 Run Context Workflow
@@ -278,11 +277,10 @@ function ExampleWorkflowButtons() {
             <button
                 onClick={runFailureWorkflow}
                 className="
-                    px-4
-                    py-3
-                    rounded-lg
-                    bg-red-700
-                    hover:bg-red-600
+                    px-4 py-3 rounded-xl font-semibold
+                    border border-rose-500/40
+                    bg-rose-600/15 text-rose-200
+                    hover:bg-rose-600/25 transition
                 "
             >
                 Run Failure Demo

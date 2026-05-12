@@ -84,7 +84,7 @@ function JobsPage() {
     )
 
     return (
-        <div>
+        <div className="mx-auto max-w-7xl">
 
             <MetricsCards />
 
@@ -92,11 +92,11 @@ function JobsPage() {
 
             <ExampleWorkflowButtons />
 
-            <h1 className="text-3xl font-bold mb-6">
+            <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-6">
                 Jobs
             </h1>
 
-            <div className="flex gap-4 mb-6 flex-wrap">
+            <div className="flex gap-3 mb-6 flex-wrap">
 
                 <input
                     type="text"
@@ -108,12 +108,9 @@ function JobsPage() {
                         )
                     }
                     className="
-                        px-4
-                        py-2
-                        rounded-lg
-                        bg-zinc-900
-                        border
-                        border-zinc-700
+                        px-4 py-2 rounded-xl bg-zinc-900/80 border border-zinc-700
+                        text-zinc-100 placeholder:text-zinc-500
+                        focus:outline-none focus:ring-2 focus:ring-cyan-500/40
                     "
                 />
 
@@ -131,20 +128,20 @@ function JobsPage() {
                             setFilter(status)
                         }
                         className={`
-                            px-4
-                            py-2
-                            rounded-lg
-                            border
+                            px-4 py-2 rounded-xl border font-medium transition
 
                             ${
                                 filter === status
                                     ? `
-                                        bg-blue-700
-                                        border-blue-600
+                                        bg-cyan-600/25
+                                        border-cyan-500/50
+                                        text-cyan-200
                                       `
                                     : `
-                                        bg-zinc-900
+                                        bg-zinc-900/70
                                         border-zinc-700
+                                        text-zinc-300
+                                        hover:text-zinc-100
                                       `
                             }
                         `}
@@ -168,13 +165,9 @@ function JobsPage() {
 
                         <div
                             className="
-                                border
-                                border-zinc-800
-                                rounded-xl
-                                p-4
-                                bg-zinc-900
-                                hover:border-zinc-600
-                                transition
+                                border border-zinc-800/90 rounded-2xl p-5
+                                bg-gradient-to-b from-zinc-900/90 to-zinc-950/90
+                                hover:border-cyan-600/50 transition
                                 cursor-pointer
                             "
                         >
@@ -201,6 +194,11 @@ function JobsPage() {
 
                     </Link>
                 ))}
+                {filteredJobs.length === 0 && (
+                    <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 text-zinc-400">
+                        No jobs match the current filters.
+                    </div>
+                )}
 
             </div>
 

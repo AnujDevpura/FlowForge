@@ -141,7 +141,7 @@ function WorkflowGraph({
                 borderRadius: 16,
 
                 border:
-                    "1px solid #3f3f46",
+                    "1px solid #52525b",
 
                 background:
                     getNodeColor(
@@ -153,6 +153,7 @@ function WorkflowGraph({
                 width: nodeWidth,
 
                 fontWeight: 600,
+                boxShadow: "0 10px 28px -18px rgba(6, 182, 212, 0.8)",
             },
         }
     })
@@ -178,11 +179,10 @@ function WorkflowGraph({
         <div
             className="
                 h-[500px]
-                border
-                border-zinc-800
-                rounded-xl
+                border border-zinc-800/80
+                rounded-2xl
                 overflow-hidden
-                bg-zinc-950
+                bg-zinc-950/80
             "
         >
 
