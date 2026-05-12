@@ -26,6 +26,8 @@ dependencies = [
   # Logging
   "structlog",
   "psycopg[binary]>=3.3.4",
+  "pytest>=9.0.3",
+  "pytest-asyncio>=1.3.0",
 ]
 
 [project.scripts]

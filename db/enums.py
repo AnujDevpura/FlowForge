@@ -14,3 +14,13 @@ class JobStatus(str, Enum):
     RUNNING = "RUNNING"
     SUCCESS = "SUCCESS"
     FAILED = "FAILED"
+
+
+class WorkerStatus(
+    str,
+    Enum,
+):
+
+    ACTIVE = "ACTIVE"
+
+    DEAD = "DEAD"

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from sqlalchemy import select
 
@@ -7,6 +7,11 @@ from db.models.task_execution import (
     TaskExecution,
 )
 
+def calculate_retry_delay(
+    retry_count: int,
+):
+
+    return 2 ** retry_count
 
 async def start_execution(
     db,

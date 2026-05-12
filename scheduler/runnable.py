@@ -1,6 +1,6 @@
 from sqlalchemy import Select, func, select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
-from datetime import datetime
+from datetime import datetime, UTC
 
 from db.enums import TaskStatus
 from db.models.dependency import TaskDependency

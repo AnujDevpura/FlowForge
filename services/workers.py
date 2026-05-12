@@ -1,5 +1,5 @@
 import socket
-from datetime import datetime
+from datetime import datetime, UTC
 
 from sqlalchemy import select
 
